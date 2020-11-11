@@ -5,6 +5,12 @@ import tensorflow as tf
 import numpy as np
 from sklearn.model_selection import train_test_split
 
+#  imports for custom tesing 
+import pandas as pd
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+# from tensorflow import keras
+from tensorflow.keras.utils import to_categorical
 # ---
 
 default_datadir = os.getenv ('DC_DATADIR') or \
@@ -54,6 +60,24 @@ def load_cifar10_data ():
     return (x_train, y_train), (x_test, y_test), \
            (img_rows, img_cols, img_channels), 'image', \
            [ 'airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+
+# adding the choice of custom dataset 
+choices +=['custom']
+def load_custom_data():
+    print('testing for custom data and model')
+    dataset_file = input('enter the name of dataset (.csv) file for ex 1n.csv ')
+    print('filename :'+dataset_file)
+    data = pd.read_csv('../data/'+dataset_file)
+    print(data)
+    X = data.iloc[:,:-1]
+    Y = data.iloc[:,-1]
+    x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.5,random_state=34)
+    # scaler = preprocessing.StandardScaler().fit(x_train)
+    # scaler.transform(x_train)
+    # scaler.transform(x_test)
+
+    return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(X.shape[1],),'csv',[0,1,2,3,4,5,6]
+
 
 # ---
 
@@ -110,5 +134,7 @@ def load_by_name (name, datadir = None):
         return load_openml_data_generic (name,
                                          **openml_choices[name],
                                          datadir = datadir)
+    elif name == 'custom':
+        return load_custom_data()
     else:
         raise ValueError ("Unknown dataset name `{}'".format (name))

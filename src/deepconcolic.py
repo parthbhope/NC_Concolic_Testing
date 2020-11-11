@@ -31,7 +31,8 @@ def deepconcolic(criterion, norm, test_object, report_args,
       engine = nc_setup (test_object = test_object,
                          engine_args = engine_args,
                          setup_analyzer = NcL0Analyzer,
-                         input_shape = test_object.raw_data.data[0].shape,
+                         input_shape = test_object.raw_data.data.shape,
+                         # input_shape = test_object.raw_data.data.shape,
                          eval_batch = eval_batch_func (test_object.dnn),
                          l0_args = l0_args)
     else:
@@ -277,6 +278,7 @@ def main():
                 run_engine = not args.setup_only,
                 initial_test_cases = init_tests,
                 max_iterations = max_iterations)
+              
 
 if __name__=="__main__":
   try:

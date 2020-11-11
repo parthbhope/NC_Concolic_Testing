@@ -486,7 +486,7 @@ class Criterion (_ActivationStatBasedInitializable):
     super().__init__(**kwds)
     self.analyzer = analyzer
     self.test_cases = []
-    self.verbose = some (verbose, 1)
+    # self.verbose = some (verbose, 1)
     self.rooted_search = self._rooted_search (prefer_rooted_search)
 
 
