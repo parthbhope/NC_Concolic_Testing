@@ -827,7 +827,7 @@ class Engine:
         # search_attempt = None
         # target = 1
         if search_attempt != None:
-          x0, x1, d = search_attempt,0
+          x0, x1, d = search_attempt
 
           # Test oracle for adversarial testing
           close_enough = all (f.close_to (self.ref_data.data if origin is None else

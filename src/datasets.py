@@ -69,15 +69,26 @@ def load_custom_data():
     print('filename :'+dataset_file)
     data = pd.read_csv('../data/'+dataset_file)
     print(data)
-    X = data.iloc[:,:-1]
-    Y = data.iloc[:,-1]
-    x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.5,random_state=34)
-    img_rows, img_cols, img_channels = 1, X.shape[1], 1
+    X = np.array(data.iloc[:,:-1])
+    Y = np.array(data.iloc[:,-1])
+    X = X.ravel()[:21952]
+    print('X shape ',X.shape)
+    X = np.reshape(X,(28,28,28,1))
+    print('X shape new ',X.shape)
+    x_train,x_test,y_train,y_test = X[:14],X[14:],Y[:14],Y[14:]
+    print('random split ',x_train.shape , y_train.shape)
+    # x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.5,random_state=34)
+    # img_rows, img_cols, img_channels = X.shape[0], X.shape[1], 1
     # scaler = preprocessing.StandardScaler().fit(x_train)
     # scaler.transform(x_train)
     # scaler.transform(x_test)
-    print(len((X.shape[0],X.shape[1],1)))
-    return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'csv',[0,1,2,3,4,5,6,8,9]
+    img_rows, img_cols, img_channels = 28,28, 1
+    # x_train = np.array(x_train)
+    # x_test = np.array(x_test)
+    # x_train = x_train.reshape(x_train.shape[0],1, x_train.shape[1],1)
+    # x_test = x_test.reshape(x_test.shape[0],1, x_test.shape[1],1)
+    # print(len((X.shape[0],X.shape[1],1)))
+    return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'image',[0,1,2,3,4,5,6,8,9]
 
 
 # ---

@@ -23,6 +23,9 @@ class NcL0Analyzer (NcAnalyzer, L0Analyzer):
 
 
   def search_input_close_to(self, x: Input, target: NcTarget) -> Optional[Tuple[float, Any]]:
+    # return None
+    # print('x shape == ',x.shape)
+    # return 0.001 , x #np.random(1,300)
     mani_range = 100
 
     tic = time()

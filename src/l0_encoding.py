@@ -31,9 +31,10 @@ class L0Analyzer:
 
 
   def sort_pixels(self, image, nc_target):
-    row, col = self.shape
     print('shape = ',self.shape)
-    chl =1 # custom
+    row, col,chl = self.shape
+   
+    # chl =1 # custom
     sort_list = np.linspace(0, 1, self.gran)
     image_batch = np.kron(np.ones((self.gran, 1, 1, 1)), image)
     print('image batch ',image_batch.shape)

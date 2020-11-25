@@ -31,7 +31,7 @@ def deepconcolic(criterion, norm, test_object, report_args,
       engine = nc_setup (test_object = test_object,
                          engine_args = engine_args,
                          setup_analyzer = NcL0Analyzer,
-                         input_shape = test_object.raw_data.data.shape,
+                         input_shape = test_object.raw_data.data[0].shape,
                          # input_shape = test_object.raw_data.data.shape,
                          eval_batch = eval_batch_func (test_object.dnn),
                          l0_args = l0_args)
@@ -182,10 +182,10 @@ def main():
     (x_train, y_train), (x_test, y_test), dims, kind, _ = datasets.load_by_name (args.dataset)
     test_data = raw_datat(x_test, y_test, args.dataset)
     train_data = raw_datat(x_train, y_train, args.dataset)
-    # save_input = save_an_image if kind in datasets.image_kinds else \
-    #              save_in_csv ('new_inputs') if len (dims) == 3 else \
-    #              None
-    save_inputs = save_in_csv('new image')
+    save_input = save_an_image if kind in datasets.image_kinds else \
+                 save_in_csv ('new_inputs') if len (dims) == 1 else \
+                 None
+    # save_inputs = save_in_csv('new image')
     amplify_diffs = kind in datasets.image_kinds
     lower_bound_metric_noise = .1       # 10%
     input_bounds = UniformBounds () if kind in datasets.image_kinds else \
