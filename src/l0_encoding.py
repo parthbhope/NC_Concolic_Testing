@@ -9,7 +9,7 @@ class L0Analyzer:
   def __init__(self, input_shape, eval_batch, gran = 2):
     self.shape = input_shape
     self.dim_row = min(input_shape[0], DIM)
-    self.dim_col = min(input_shape[1], DIM)
+    self.dim_col = min(input_shape[0], DIM)
     [x, y] = np.meshgrid(np.arange(self.dim_row), np.arange(self.dim_col))
     xflat = x.flatten('F')          # to flatten in column-major order
     yflat = y.flatten('F')          # to flatten in column-major order

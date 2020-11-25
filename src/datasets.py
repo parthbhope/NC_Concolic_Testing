@@ -89,6 +89,19 @@ def load_custom_data():
     # x_test = x_test.reshape(x_test.shape[0],1, x_test.shape[1],1)
     # print(len((X.shape[0],X.shape[1],1)))
     return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'image',[0,1,2,3,4,5,6,8,9]
+choices+=['custom-csv']
+def load_custom_csv():
+  data = pd.read_csv('../data/1n.csv')
+  print(data)
+  X = np.array(data.iloc[:,:-1])
+  Y = np.array(data.iloc[:,-1])
+  dummy_arr = np.zeros((X.shape[0],784 - X.shape[1]))
+  X = np.append(X,dummy_arr,axis=1)
+  print('new shape x =',X.shape)
+  X = np.reshape(X,(X.shape[0],28,28,1))
+  img_rows, img_cols,img_channels = 28,28,1
+  x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.2,random_state=34)
+  return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'csv',[0,1,2,3,4,5,6,8,9]
 
 
 # ---
@@ -148,5 +161,7 @@ def load_by_name (name, datadir = None):
                                          datadir = datadir)
     elif name == 'custom':
         return load_custom_data()
+    elif name == 'custom-csv':
+      return load_custom_csv()
     else:
         raise ValueError ("Unknown dataset name `{}'".format (name))
