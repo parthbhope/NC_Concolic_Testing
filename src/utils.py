@@ -16,6 +16,10 @@ import sklearn
 import tensorflow as tf
 from tensorflow import keras
 
+def some(a, d):
+  return a if a is not None else d
+
+
 def rng_seed (seed: Optional[int]):
   if seed is None: return
   np.random.seed (seed)

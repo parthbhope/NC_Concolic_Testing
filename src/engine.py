@@ -486,7 +486,7 @@ class Criterion (_ActivationStatBasedInitializable):
     super().__init__(**kwds)
     self.analyzer = analyzer
     self.test_cases = []
-    # self.verbose = some (verbose, 1)
+    self.verbose = some (verbose, 1)
     self.rooted_search = self._rooted_search (prefer_rooted_search)
 
 
@@ -819,13 +819,15 @@ class Engine:
     try:
 
       while ((iteration <= max_iterations or max_iterations < 0) and
-             not coverage.done):
+             not False):
 
         adversarial = False
 
         search_attempt, target = criterion.search_next ()
+        # search_attempt = None
+        # target = 1
         if search_attempt != None:
-          x0, x1, d = search_attempt
+          x0, x1, d = search_attempt,0
 
           # Test oracle for adversarial testing
           close_enough = all (f.close_to (self.ref_data.data if origin is None else
@@ -865,8 +867,10 @@ class Engine:
                      '#adversarial examples: {0.num_adversarials} '
                      .format(report),
                      '#diff: {} {}'
+                     # .format(d if search_attempt != None else '_',
+                     #         target.log_repr ()))
                      .format(d if search_attempt != None else '_',
-                             target.log_repr ()))
+                             ''))
 
         iteration += 1
 

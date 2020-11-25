@@ -182,9 +182,10 @@ def main():
     (x_train, y_train), (x_test, y_test), dims, kind, _ = datasets.load_by_name (args.dataset)
     test_data = raw_datat(x_test, y_test, args.dataset)
     train_data = raw_datat(x_train, y_train, args.dataset)
-    save_input = save_an_image if kind in datasets.image_kinds else \
-                 save_in_csv ('new_inputs') if len (dims) == 1 else \
-                 None
+    # save_input = save_an_image if kind in datasets.image_kinds else \
+    #              save_in_csv ('new_inputs') if len (dims) == 3 else \
+    #              None
+    save_inputs = save_in_csv('new image')
     amplify_diffs = kind in datasets.image_kinds
     lower_bound_metric_noise = .1       # 10%
     input_bounds = UniformBounds () if kind in datasets.image_kinds else \

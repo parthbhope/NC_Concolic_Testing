@@ -72,11 +72,12 @@ def load_custom_data():
     X = data.iloc[:,:-1]
     Y = data.iloc[:,-1]
     x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.5,random_state=34)
+    img_rows, img_cols, img_channels = 1, X.shape[1], 1
     # scaler = preprocessing.StandardScaler().fit(x_train)
     # scaler.transform(x_train)
     # scaler.transform(x_test)
-
-    return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(X.shape[1],),'csv',[0,1,2,3,4,5,6]
+    print(len((X.shape[0],X.shape[1],1)))
+    return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'csv',[0,1,2,3,4,5,6,8,9]
 
 
 # ---
