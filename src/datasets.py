@@ -64,11 +64,11 @@ def load_cifar10_data ():
 # adding the choice of custom dataset 
 choices +=['custom']
 def load_custom_data():
-    print('testing for custom data and model')
-    dataset_file = input('enter the name of dataset (.csv) file for ex 1n.csv ')
-    print('filename :'+dataset_file)
+    print('testing for custom data and model \n')
+    dataset_file = input('enter dataset 1n/2n/3n/4n/5n/6n.csv ')
+    print('dataset under test :'+dataset_file)
     data = pd.read_csv('../data/'+dataset_file)
-    print(data)
+    # print(data)
     X = np.array(data.iloc[:,:-1])
     Y = np.array(data.iloc[:,-1])
     X = X.ravel()[:21952]
@@ -89,16 +89,25 @@ def load_custom_data():
     # x_test = x_test.reshape(x_test.shape[0],1, x_test.shape[1],1)
     # print(len((X.shape[0],X.shape[1],1)))
     return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'image',[0,1,2,3,4,5,6,8,9]
-choices+=['custom-csv']
-def load_custom_csv():
-  data = pd.read_csv('../data/1n.csv')
-  print(data)
+choices+=['custom-2']
+def load_custom_2():
+  # input dataset is a 2d dataset
+  # the dataset is reshaped to 4 dimensions n images of 3 dimnsions (img_rows,img_cols,img_channels)
+  # images chanels is set to one to make the 2d data apparently 4d
+  # the model used here is mnist_complicated.h5 to check neuron coverage
+  # command !python deepconcolic.py --model ../saved_models/mnist_complicated.h5  --dataset custom-2 --outputs outs/ --max-iterations 50
+
+  print('testing for custom data and model \n')
+  dataset_file = input('enter dataset 1n/2n/3n/4n/5n/6n.csv ')
+  print('dataset under test :'+dataset_file)
+  data = pd.read_csv('../data/'+dataset_file)
   X = np.array(data.iloc[:,:-1])
   Y = np.array(data.iloc[:,-1])
+  print('original dimensions ',X.shape)
   dummy_arr = np.zeros((X.shape[0],784 - X.shape[1]))
   X = np.append(X,dummy_arr,axis=1)
-  print('new shape x =',X.shape)
   X = np.reshape(X,(X.shape[0],28,28,1))
+  print('modeified dimensions  =',X.shape)
   img_rows, img_cols,img_channels = 28,28,1
   x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.2,random_state=34)
   return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'csv',[0,1,2,3,4,5,6,8,9]
@@ -161,7 +170,7 @@ def load_by_name (name, datadir = None):
                                          datadir = datadir)
     elif name == 'custom':
         return load_custom_data()
-    elif name == 'custom-csv':
-      return load_custom_csv()
+    elif name == 'custom-2':
+      return load_custom_2()
     else:
         raise ValueError ("Unknown dataset name `{}'".format (name))
