@@ -31,11 +31,12 @@ class L0Analyzer:
 
 
   def sort_pixels(self, image, nc_target):
-    row, col, chl = self.shape
-
+    row, col = self.shape
+    print('shape = ',self.shape)
+    chl =1 # custom
     sort_list = np.linspace(0, 1, self.gran)
     image_batch = np.kron(np.ones((self.gran, 1, 1, 1)), image)
-
+    print('image batch ',image_batch.shape)
     selected_rows = np.random.choice(row, self.dim_row)
     selected_cols = np.random.choice(col, self.dim_col)
     images = []
@@ -43,6 +44,7 @@ class L0Analyzer:
       for j in selected_cols:
         new_image_batch = image_batch.copy()
         for g in range(0, self.gran):
+          print('self gran = ', self.gran)
           new_image_batch[g, i, j, :] = sort_list[g]
         images.append(new_image_batch)
 
