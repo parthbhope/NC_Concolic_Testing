@@ -64,7 +64,12 @@ def load_cifar10_data ():
 # adding the choice of custom dataset 
 choices +=['custom']
 def load_custom_data():
-  # use conv.h5
+  # input dataset is a 2d dataset
+  # the dataset is reshaped to 4 dimensions n images of 3 dimnsions (img_rows,img_cols,img_channels) (20,25,1)
+  # images chanels is set to one to make the 2d data apparently 4d
+  # the model used here is model_1.h5 to check neuron coverage
+  # command !python deepconcolic.py --model ../saved_models/conv_1.h5  --dataset custom --outputs outs/ --max-iterations 50
+
     print('testing for custom data and model \n')
     dataset_file = input('enter dataset 1n/2n/3n/4n/5n/6n.csv ')
     print('dataset under test :'+dataset_file)
