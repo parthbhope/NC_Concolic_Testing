@@ -64,6 +64,7 @@ def load_cifar10_data ():
 # adding the choice of custom dataset 
 choices +=['custom']
 def load_custom_data():
+  # use conv.h5
     print('testing for custom data and model \n')
     dataset_file = input('enter dataset 1n/2n/3n/4n/5n/6n.csv ')
     print('dataset under test :'+dataset_file)
@@ -71,24 +72,24 @@ def load_custom_data():
     # print(data)
     X = np.array(data.iloc[:,:-1])
     Y = np.array(data.iloc[:,-1])
-    X = X.ravel()[:21952]
-    print('X shape ',X.shape)
-    X = np.reshape(X,(28,28,28,1))
-    print('X shape new ',X.shape)
-    x_train,x_test,y_train,y_test = X[:14],X[14:],Y[:14],Y[14:]
-    print('random split ',x_train.shape , y_train.shape)
-    # x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.5,random_state=34)
+    # X = X.ravel()[:21952]
+    print('original dimensions ',X.shape)
+    X = np.reshape(X,(X.shape[0],20,15,1))
+    print('modidied dimensions ',X.shape)
+    x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.2,random_state=34)
+    # print('random split ',x_train.shape , y_train.shape)
+    # 
     # img_rows, img_cols, img_channels = X.shape[0], X.shape[1], 1
     # scaler = preprocessing.StandardScaler().fit(x_train)
     # scaler.transform(x_train)
     # scaler.transform(x_test)
-    img_rows, img_cols, img_channels = 28,28, 1
+    img_rows, img_cols, img_channels = 20,15, 1
     # x_train = np.array(x_train)
     # x_test = np.array(x_test)
     # x_train = x_train.reshape(x_train.shape[0],1, x_train.shape[1],1)
     # x_test = x_test.reshape(x_test.shape[0],1, x_test.shape[1],1)
     # print(len((X.shape[0],X.shape[1],1)))
-    return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'image',[0,1,2,3,4,5,6,8,9]
+    return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'csv',[0,1,2,3,4,5,6,8,9]
 choices+=['custom-2']
 def load_custom_2():
   # input dataset is a 2d dataset
@@ -107,7 +108,7 @@ def load_custom_2():
   dummy_arr = np.zeros((X.shape[0],784 - X.shape[1]))
   X = np.append(X,dummy_arr,axis=1)
   X = np.reshape(X,(X.shape[0],28,28,1))
-  print('modeified dimensions  =',X.shape)
+  print('modified dimensions  =',X.shape)
   img_rows, img_cols,img_channels = 28,28,1
   x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.2,random_state=34)
   return (x_train,to_categorical(y_train)),(x_test,to_categorical(y_test)),(img_rows,img_cols,img_channels),'csv',[0,1,2,3,4,5,6,8,9]
